@@ -1,7 +1,5 @@
 package com.st.controller;
 
-import com.dianping.cat.Cat;
-import com.dianping.cat.message.Transaction;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,14 +12,16 @@ import java.util.Map;
 public class UserController {
 
 
+    // 当num=1时，不报异常。当num!=1时，会报异常
     @RequestMapping(value = "printnum", method = RequestMethod.GET)
     public Map login(@RequestParam("num") Integer num) {
 
-        Transaction t = Cat.newTransaction("URL", "haha");
-        t.setStatus(Transaction.SUCCESS);
-        Cat.logEvent("hello", "haha");
         Map<String, Object> map = new HashMap<>();
-        map.put("num", num);
+        if (num == 1) {
+            map.put("num", 1);
+        } else {
+            map.put("num", num / 0);
+        }
         return map;
     }
 
